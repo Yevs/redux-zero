@@ -4,8 +4,8 @@ export default function createStore(state = {}) {
     setState(update) {
       state =
         typeof update === "function"
-          ? { ...state, ...update(state) }
-          : { ...state, ...update }
+          ? update(state)
+          : state
 
       listeners.forEach(f => f(state))
     },
