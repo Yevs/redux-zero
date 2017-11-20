@@ -6,11 +6,11 @@ import propValidation from "../../utils/propsValidation"
 
 export default class Provider extends React.Component<Props, {}> {
   static childContextTypes = {
-    store: propValidation
+    __redux_zero_store: propValidation
   }
   getChildContext() {
     const { store } = this.props
-    return { store }
+    return { __redux_zero_store: store }
   }
   render() {
     const { children } = this.props

@@ -6,27 +6,32 @@ import bindActions from "../../utils/bindActions"
 
 export class Connect extends React.Component<any> {
   static contextTypes = {
-    store: propValidation
+    __redux_zero_store: propValidation
   }
   unsubscribe
   state = this.getProps()
   actions = this.getActions()
   componentWillMount() {
-    this.unsubscribe = this.context.store.subscribe(this.update)
+    this.unsubscribe = this.context.__redux_zero_store.subscribe(this.update)
   }
   componentWillUnmount() {
     this.unsubscribe(this.update)
   }
   getProps() {
     const { mapToProps } = this.props
-    const state = (this.context.store && this.context.store.getState()) || {}
+    const state =
+      (this.context.__redux_zero_store &&
+        this.context.__redux_zero_store.getState()) ||
+      {}
     return mapToProps(state, this.props)
   }
   getActions() {
     const { actions } = this.props
     return bindActions(
-      typeof actions === "function" ? actions(this.context.store) : actions,
-      this.context.store
+      typeof actions === "function"
+        ? actions(this.context.__redux_zero_store)
+        : actions,
+      this.context.__redux_zero_store
     )
   }
   update = () => {
@@ -37,7 +42,7 @@ export class Connect extends React.Component<any> {
   }
   render() {
     return this.props.children({
-      store: this.context.store,
+      store0: this.context.__redux_zero_store,
       ...this.state,
       ...this.actions
     })
